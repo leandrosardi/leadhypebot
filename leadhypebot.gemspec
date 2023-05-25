@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name        = 'leadhypebot'
-    s.version     = '1.1'
+    s.version     = '1.2'
     s.date        = '2023-05-25'
     s.summary     = "Ruby library for automation operation on the LeadHype Scraper platform."
     s.description = "Find documentation here: https://github.com/leandrosardi/leadhypebot"
