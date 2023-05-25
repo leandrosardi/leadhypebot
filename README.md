@@ -74,7 +74,8 @@ p b.error_jobs.size
 ```ruby
 l = BlackStack::LocalLogger.new('./test.log')
 page = 1
-b.sales_navigator_jobs('test', STATUS_PENDING, page, l)
+status = BlackStack::Bots::LeadHypeBot::STATUS_PENDING
+b.sales_navigator_jobs('test', status, page, l)
 ```
 
 ## 6. Managing Pagination
