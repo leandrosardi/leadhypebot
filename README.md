@@ -31,6 +31,15 @@ b.submit(job_name, sales_navigator_url)
 ```ruby
 ```
 
+4. Downloading CSV
+
+```ruby
+```
+
 ## 2. Log Tracking
 
-## 3. Getting Jobs
+## 3. Getting Pending Jobs
+
+## 4. Getting Error Jobs
+
+## 5. Getting Jobs with Custom Filters

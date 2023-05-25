@@ -75,7 +75,7 @@ module BlackStack
                 #agent
             end # def login
 
-            def submit(name, url, l=nil)
+            def submit(job_name, sales_navigator_url, l=nil)
                 l = BlackStack::DummyLogger.new(nil) if l.nil?
                 url = 'https://tool.leadhype.com/dashboard/'
 
@@ -84,32 +84,30 @@ module BlackStack
                 page = self.agent.get(url)
                 l.done
 
-                # getting select with name='mode'
-                l.logs "getting mode select... "
-                select = page.form.field_with(:name => 'mode')
-
-                # selecting option with value='16'
-                l.logs "selecting Sales Navigator option... "
-                option = select.option_with(:value => '16')
-                option.select
+                # send a post request from this page to https://tool.leadhype.com/view/front/controller.php
+                l.logs "sending post request... "
+                page = self.agent.post('https://tool.leadhype.com/view/front/controller.php', {
+                    'mode' => '16',
+                    'keyword' => job_name,
+                    'location' => sales_navigator_url,
+                    'keyword_beta_dropdown' => '',
+                    'locations' => '',
+                    'account' => '',
+                    'titles' => '',
+                    'isautosalesnavjob' => 'on',
+                    'action' => 'addJob'
+                })
                 l.done
-
-                # setting the text-field with name='keyword'
-                l.logs "Setting job name... "
-                page.form.field_with(:name => 'keyword').value = name
-                l.done
-
-                # setting the text-field with name='location'
-                l.logs "Setting job url... "
-                page.form.field_with(:name => 'location').value = url
-                l.done
-
-binding.pry
-
-                # clicking on the button with id='addJob'
-                l.logs "Submitting the form... "
-                page = page.form.submit(page.form.button_with(:id => 'addJob'))
-
+                
+                # validate response
+                l.logs "validating response... "
+                h = JSON.parse(page.content)
+                if h['type'] == 'success'
+                    l.logf 'success'.green
+                else
+                    l.logf 'failed'.red
+                    raise 'failed to submit job'
+                end
             end # def submit
 
             # getting SalesNavigator jobs from LeadHype.

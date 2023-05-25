@@ -5,7 +5,7 @@ require_relative '../lib/leadhypebot.rb'
 
 l = BlackStack::LocalLogger.new('./submit.log')
 
-b = BlackStack::Bots::LeadHype.new('leandro@connectionsphere.com', 'foo-password')
+b = BlackStack::Bots::LeadHype.new('leandro@connectionsphere.com', 'SantaClara123')
 
 b.login(l)
 
