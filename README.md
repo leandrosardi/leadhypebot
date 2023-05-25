@@ -1,3 +1,5 @@
+![Gem version](https://img.shields.io/gem/v/leadhypebot)![Gem downloads](https://img.shields.io/gem/dt/leadhypebot)
+
 # leadhypebot
 
 Ruby bot for automating opearions on LeadHype Scraper
@@ -28,18 +30,57 @@ b.submit(job_name, sales_navigator_url)
 
 3. Checking job status
 
+Getting the status of the "test" job.
+
 ```ruby
+p b.sales_navigator_jobs('test').first[:status]
+# => "Pending"
 ```
 
 4. Downloading CSV
 
+If the job 'test' is completed, download its CSV as "/tmp/text.csv"
+
 ```ruby
+status = b.sales_navigator_jobs('test').first[:status]
+b.download('test') if status == BlackStack::Bots::LeadHype::STATUS_COMPLETED
 ```
 
 ## 2. Log Tracking
 
+This [LeadHypeBot]() is integrated with [Simple Cloud Login](https://github.com/leandrosardi/simple_cloud_logging), for tracking all methods internal activity.
+
+```ruby
+l = BlackStack::LocalLogger.new('./test.log')
+b.submit(job_name, sales_navigator_url, l)
+```
+
 ## 3. Getting Pending Jobs
+
+```ruby
+p b.pending_jobs.size
+# => 1
+```
 
 ## 4. Getting Error Jobs
 
+```ruby
+p b.error_jobs.size
+# => 0
+```
+
 ## 5. Getting Jobs with Custom Filters
+
+```ruby
+l = BlackStack::LocalLogger.new('./test.log')
+page = 1
+b.sales_navigator_jobs('test', STATUS_PENDING, page, l)
+```
+
+## 6. Managing Pagination
+
+Method `sales_navigator_jobs` is not managing pagination yet.
+
+## Disclaimer
+
+Use this gem at your own risk.
