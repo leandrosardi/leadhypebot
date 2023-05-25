@@ -2,7 +2,7 @@
 
 # leadhypebot
 
-Ruby bot for automating opearions on LeadHype Scraper
+Ruby bot for automating opearions on [LeadHype Scraper](http://leadhype.com/scrapehype/).
 
 ## 1. Getting Started
 
