@@ -1,5 +1,5 @@
 # download.rb
-# This example access LeadHype and download the CSV of a given job into the /tmp folder.
+# This example access LeadHype and checks the number of error jobs.
 
 require_relative '../lib/leadhypebot.rb'
 
@@ -9,5 +9,6 @@ b = BlackStack::Bots::LeadHype.new('leandro@connectionsphere.com', 'foo-password
 
 b.login(l)
 
-b.download('b3f2b156-c53a-4aea-8644-bffbb4c760b9', l)
+l.logs 'pending jobs... '
+l.logf b.error_jobs.size.to_s
 

@@ -82,9 +82,9 @@ module BlackStack
                 url = 'https://tool.leadhype.com/dashboard/history/?'
 
                 # apply filters
-                url += "search=#{CGI.escape(search)}&" unless search.nil?
+                url += "search=#{CGI.escape(search.to_s)}&"
                 url += "status=#{CGI.escape(status)}&" unless status.nil?
-
+#binding.pry
                 # visit LeadHype history page
                 l.logs "visiting LeadHype history page... "
                 page = self.agent.get(url)
@@ -136,13 +136,20 @@ module BlackStack
                 ret
             end
 
-            # download the CSV of a given job with the parameter `s`
+            # return array of pending jobs
+            def pending_jobs(page=1, l=nil)
+                self.sales_navigator_jobs(nil, STATUS_PENDING, page, l)
+            end
+
+            # return array of pending jobs
+            def error_jobs(page=1, l=nil)
+                self.sales_navigator_jobs(nil, STATUS_ERROR, page, l)
+            end
+
+            # download the CSV of a given job with the parameter `s` into the file "/tmp/#{s}.csv"
             def download(s, l=nil)
                 l = BlackStack::DummyLogger.new(nil) if l.nil?
-
-                # login
-                self.login(l)
-   
+                
                 # jobs
                 jobs = self.sales_navigator_jobs(s, nil, 1, l)
 
