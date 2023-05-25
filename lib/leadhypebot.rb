@@ -75,6 +75,43 @@ module BlackStack
                 #agent
             end # def login
 
+            def submit(name, url, l=nil)
+                l = BlackStack::DummyLogger.new(nil) if l.nil?
+                url = 'https://tool.leadhype.com/dashboard/'
+
+                # visit LeadHype history page
+                l.logs "visiting LeadHype dashboard page... "
+                page = self.agent.get(url)
+                l.done
+
+                # getting select with name='mode'
+                l.logs "getting mode select... "
+                select = page.form.field_with(:name => 'mode')
+
+                # selecting option with value='16'
+                l.logs "selecting Sales Navigator option... "
+                option = select.option_with(:value => '16')
+                option.select
+                l.done
+
+                # setting the text-field with name='keyword'
+                l.logs "Setting job name... "
+                page.form.field_with(:name => 'keyword').value = name
+                l.done
+
+                # setting the text-field with name='location'
+                l.logs "Setting job url... "
+                page.form.field_with(:name => 'location').value = url
+                l.done
+
+binding.pry
+
+                # clicking on the button with id='addJob'
+                l.logs "Submitting the form... "
+                page = page.form.submit(page.form.button_with(:id => 'addJob'))
+
+            end # def submit
+
             # getting SalesNavigator jobs from LeadHype.
             def sales_navigator_jobs(search=nil, status=nil, page=1, l=nil)
                 ret = []
@@ -84,7 +121,7 @@ module BlackStack
                 # apply filters
                 url += "search=#{CGI.escape(search.to_s)}&"
                 url += "status=#{CGI.escape(status)}&" unless status.nil?
-#binding.pry
+
                 # visit LeadHype history page
                 l.logs "visiting LeadHype history page... "
                 page = self.agent.get(url)
