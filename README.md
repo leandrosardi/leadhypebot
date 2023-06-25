@@ -1,4 +1,4 @@
-![Gem version](https://img.shields.io/gem/v/leadhypebot)![Gem downloads](https://img.shields.io/gem/dt/leadhypebot)
+![Gem version](https://img.shields.io/gem/v/leadhypebot) ![Gem downloads](https://img.shields.io/gem/dt/leadhypebot)
 
 # leadhypebot
 
@@ -48,7 +48,7 @@ b.download('test') if status == BlackStack::Bots::LeadHype::STATUS_COMPLETED
 
 ## 2. Log Tracking
 
-This [LeadHypeBot]() is integrated with [Simple Cloud Login](https://github.com/leandrosardi/simple_cloud_logging), for tracking all methods internal activity.
+This [LeadHypeBot](https://github.com/leandrosardi/leadhypebot) is integrated with [Simple Cloud Logging](https://github.com/leandrosardi/simple_cloud_logging), for tracking all methods internal activity.
 
 ```ruby
 l = BlackStack::LocalLogger.new('./test.log')
